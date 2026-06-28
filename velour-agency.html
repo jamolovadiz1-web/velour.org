@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velour — Veb Agentlik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0A0A0A;
+  --off-white:#F5F0EA;
+  --gold:#C9A96E;
+  --gold-dim:#8B6F3E;
+  --mid:#1A1A1A;
+  --muted:rgba(245,240,234,0.45);
+}
+html{scroll-behavior:smooth;background:var(--black)}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--black);
+  color:var(--off-white);
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 56px;
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:300;letter-spacing:0.15em;
+  color:var(--off-white);text-decoration:none;text-transform:lowercase;
+}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{
+  font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.3s;cursor:pointer;
+}
+.nav-links a:hover{color:var(--gold)}
+
+/* HERO */
+#hero{
+  position:relative;height:100vh;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#three-canvas{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;pointer-events:none;
+}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:0.35em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:32px;
+}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(64px,10vw,140px);
+  font-weight:300;line-height:0.9;
+  letter-spacing:-0.02em;
+  color:var(--off-white);
+  margin-bottom:40px;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{
+  font-size:13px;letter-spacing:0.12em;
+  color:var(--muted);max-width:340px;
+  margin:0 auto 56px;line-height:1.8;
+}
+.hero-cta{
+  display:inline-block;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  padding:14px 48px;
+  font-size:10px;letter-spacing:0.3em;text-transform:uppercase;
+  text-decoration:none;
+  transition:background 0.4s,color 0.4s;
+  pointer-events:all;cursor:pointer;
+}
+.hero-cta:hover{background:var(--gold);color:var(--black)}
+.scroll-hint{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  color:var(--muted);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+  z-index:2;
+}
+.scroll-line{
+  width:1px;height:60px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:0.3;transform:scaleY(1)}
+  50%{opacity:1;transform:scaleY(0.5)}
+}
+
+/* MARQUEE */
+.marquee-strip{
+  background:var(--gold);
+  padding:14px 0;overflow:hidden;
+  display:flex;white-space:nowrap;
+}
+.marquee-inner{
+  display:inline-flex;animation:marquee 18s linear infinite;
+}
+.marquee-item{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;font-style:italic;letter-spacing:0.1em;
+  color:var(--black);padding:0 48px;
+  border-right:1px solid rgba(0,0,0,0.2);
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:120px 56px}
+.section-label{
+  font-size:9px;letter-spacing:0.35em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:24px;display:block;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,6vw,80px);font-weight:300;
+  line-height:1.05;color:var(--off-white);
+  margin-bottom:32px;
+}
+.section-title em{font-style:italic}
+
+/* ABOUT */
+#about{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  border-top:1px solid rgba(245,240,234,0.08);
+}
+.about-text p{
+  font-size:15px;line-height:1.9;color:var(--muted);
+  margin-bottom:20px;font-weight:300;
+}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px}
+.stat{background:var(--mid);padding:32px 28px}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:8px;
+}
+.stat-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.about-visual{
+  position:relative;height:480px;
+  background:var(--mid);overflow:hidden;
+}
+.about-visual-inner{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.big-v{
+  font-family:'Cormorant Garamond',serif;
+  font-size:320px;font-weight:300;
+  color:rgba(201,169,110,0.06);
+  line-height:1;user-select:none;
+  animation:floatV 6s ease-in-out infinite;
+}
+@keyframes floatV{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.about-tag{
+  position:absolute;bottom:32px;right:32px;
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold-dim);
+}
+
+/* SERVICES */
+#services{
+  background:var(--mid);
+  border-top:1px solid rgba(245,240,234,0.06);
+}
+.services-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:72px;flex-wrap:wrap;gap:32px;
+}
+.services-intro{
+  font-size:14px;line-height:1.8;color:var(--muted);
+  max-width:360px;font-weight:300;
+}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.service-card{
+  background:var(--black);padding:44px 36px;
+  border-top:2px solid transparent;
+  transition:border-color 0.3s,transform 0.3s;
+  cursor:default;
+}
+.service-card:hover{border-top-color:var(--gold);transform:translateY(-4px)}
+.service-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;color:var(--gold-dim);margin-bottom:28px;letter-spacing:0.1em;
+}
+.service-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:300;color:var(--off-white);
+  margin-bottom:16px;line-height:1.2;
+}
+.service-desc{font-size:13px;line-height:1.8;color:var(--muted);font-weight:300}
+
+/* WORK */
+#work{border-top:1px solid rgba(245,240,234,0.08)}
+.work-head{margin-bottom:64px}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.work-item{
+  position:relative;overflow:hidden;cursor:pointer;
+  background:var(--mid);
+}
+.work-item:first-child{grid-row:span 2}
+.work-img{
+  width:100%;height:100%;min-height:280px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.work-item:hover .work-img{transform:scale(1.04)}
+.work-placeholder{
+  font-family:'Cormorant Garamond',serif;
+  font-size:80px;font-weight:300;
+  color:rgba(201,169,110,0.15);
+  pointer-events:none;user-select:none;
+}
+.work-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 32px;
+  background:linear-gradient(transparent,rgba(10,10,10,0.92));
+}
+.work-client{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.work-title-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--off-white)}
+.work-tag-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.work-tag{
+  font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+  border:1px solid rgba(201,169,110,0.3);
+  color:var(--gold-dim);padding:4px 10px;
+}
+
+/* CONTACT */
+#contact{
+  background:var(--off-white);color:var(--black);
+  text-align:center;padding:120px 56px;
+  border-top:1px solid rgba(245,240,234,0.08);
+}
+#contact .section-title{color:var(--black)}
+#contact .section-label{color:var(--gold-dim)}
+.contact-sub{
+  font-size:15px;line-height:1.8;
+  color:rgba(10,10,10,0.55);
+  max-width:440px;margin:0 auto 56px;font-weight:300;
+}
+.contact-cta{
+  display:inline-block;
+  background:var(--black);color:var(--off-white);
+  padding:18px 60px;
+  font-size:10px;letter-spacing:0.3em;text-transform:uppercase;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:background 0.3s,color 0.3s;
+}
+.contact-cta:hover{background:var(--gold);color:var(--black)}
+.contact-email{
+  display:block;margin-top:40px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:300;font-style:italic;
+  color:var(--gold-dim);text-decoration:none;
+}
+.contact-email:hover{color:var(--black)}
+
+/* FOOTER */
+footer{
+  background:var(--black);padding:40px 56px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid rgba(245,240,234,0.06);
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:300;letter-spacing:0.15em;
+  color:var(--off-white);text-transform:lowercase;
+}
+.footer-copy{font-size:10px;letter-spacing:0.1em;color:rgba(245,240,234,0.25)}
+.footer-socials{display:flex;gap:24px}
+.footer-socials a{
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(245,240,234,0.3);text-decoration:none;
+  transition:color 0.3s;cursor:pointer;
+}
+.footer-socials a:hover{color:var(--gold)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:20px 24px}
+  .nav-links{gap:20px}
+  section{padding:80px 24px}
+  #about{grid-template-columns:1fr;gap:40px}
+  .about-visual{height:300px}
+  .services-grid{grid-template-columns:1fr}
+  .work-grid{grid-template-columns:1fr}
+  .work-item:first-child{grid-row:span 1}
+  footer{flex-direction:column;gap:16px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">velour</a>
+  <ul class="nav-links">
+    <li><a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Studio</a></li>
+    <li><a onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Xizmatlar</a></li>
+    <li><a onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">Ishlar</a></li>
+    <li><a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Aloqa</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <canvas id="three-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Premium Raqamli Tajribalar</p>
+    <h1 class="hero-title">Biz <em>vebni</em><br>mehr bilan<br>yaratamiz.</h1>
+    <p class="hero-sub">Velour — mukammallikni talab qiluvchi brendlar uchun zamonaviy raqamli mavjudlik yaratuvchi butik agentlik.</p>
+    <a class="hero-cta" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">Ishlarimizni Ko'ring</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Aylantiring</span>
+  </div>
+</section>
+
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item">Veb Dizayn</span>
+    <span class="marquee-item">Brend Identifikatsiyasi</span>
+    <span class="marquee-item">Raqamli Strategiya</span>
+    <span class="marquee-item">UI/UX Dizayn</span>
+    <span class="marquee-item">Harakat Dizayni</span>
+    <span class="marquee-item">Dasturlash</span>
+    <span class="marquee-item">Veb Dizayn</span>
+    <span class="marquee-item">Brend Identifikatsiyasi</span>
+    <span class="marquee-item">Raqamli Strategiya</span>
+    <span class="marquee-item">UI/UX Dizayn</span>
+    <span class="marquee-item">Harakat Dizayni</span>
+    <span class="marquee-item">Dasturlash</span>
+  </div>
+</div>
+
+<section id="about">
+  <div>
+    <span class="section-label">Bizning Studio</span>
+    <h2 class="section-title">Aniqlik <em>she'riyat</em> bilan uchrashuvi</h2>
+    <div class="about-text">
+      <p>Biz — eng yaxshi raqamli ish baqirmasligi kerak, deb ishonuvchi kichik dizaynerlar va dasturchilar jamoasimiz. U sizni o'ziga tortishi kerak. Har bir loyiha tinglashdan boshlanadi.</p>
+      <p>Mahoratning eng yuqori shakli — o'z-o'zini cheklash, degan ishonch asosida ishlabmiz. Har yili cheklangan miqdordagi mijozlar bilan hamkorlik qilib, nomimizni qo'yishdan faxrlanadigan ishlar yaratamiz.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-num">7+</div><div class="stat-label">Yillik tajriba</div></div>
+      <div class="stat"><div class="stat-num">94</div><div class="stat-label">Yakunlangan loyihalar</div></div>
+      <div class="stat"><div class="stat-num">38</div><div class="stat-label">Faol mijozlar</div></div>
+      <div class="stat"><div class="stat-num">12</div><div class="stat-label">Mukofotlar</div></div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-visual-inner">
+      <div class="big-v">V</div>
+    </div>
+    <span class="about-tag">Est. 2017 — Tashkent</span>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-head">
+    <div>
+      <span class="section-label">Nima Qilamiz</span>
+      <h2 class="section-title">Xizmatlar</h2>
+    </div>
+    <p class="services-intro">Har bir hamkorlik — bu birgalikdagi ijod. Biz brendlar kabi maqsadli his qilinadigan raqamli mahsulotlar yaratamiz.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Brend & Identifikatsiya</div>
+      <p class="service-desc">Birorta so'z o'qilmasdan oldin kim ekanligingizni bildiruvchi vizual tizimlar. Logotiplar, ranglar, shriftlar va ularni birlashtiruvchi mantiq.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Veb Dizayn</div>
+      <p class="service-desc">Jonli his qilinadigan saytlar — har bir tartib, har bir o'zaro ta'sir, foydalanuvchi tajribasini har bir qarorning markaziga qo'yib yaratilgan.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Dasturlash</div>
+      <p class="service-desc">Biz loyihalagan narsani quramiz. Haqiqiy foydalanuvchilarning tekshiruviga bardosh beradigan, miqyosda ishlaydigan toza, samarali kod.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-name">Harakat & Animatsiya</div>
+      <p class="service-desc">O'z o'rnini topgan harakat — tajribani chalg'itmasdan chuqurlashtiruvchi o'tishlar, mikro-interaksiyalar va muhit animatsiyasi.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-name">Raqamli Strategiya</div>
+      <p class="service-desc">Kimga va nima uchun murojaat qilayotganingizni aniqlik bilan tushunish. Brendlarga raqamli ovozlarini topishda va uni maqsadli rivojlantirishda yordam beramiz.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-name">Doimiy Hamkorlik</div>
+      <p class="service-desc">Eng yaxshi munosabatlar uzoq muddatli bo'ladi. Tanlangan mijozlar bilan retainer asosida ishlashda davom etamiz.</p>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="work-head">
+    <span class="section-label">Tanlangan Loyihalar</span>
+    <h2 class="section-title"><em>So'zlashuvchi</em> ishlar</h2>
+  </div>
+  <div class="work-grid">
+    <div class="work-item" style="min-height:560px">
+      <div class="work-img" style="min-height:560px">
+        <span class="work-placeholder" style="font-size:180px">A</span>
+      </div>
+      <div class="work-info">
+        <div class="work-client">Aura Collective</div>
+        <div class="work-title-text">Brend Identifikatsiyasi & Sayt</div>
+        <div class="work-tag-row">
+          <span class="work-tag">Brending</span>
+          <span class="work-tag">Veb</span>
+          <span class="work-tag">2024</span>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <div class="work-img" style="min-height:278px">
+        <span class="work-placeholder">M</span>
+      </div>
+      <div class="work-info">
+        <div class="work-client">Moira Studio</div>
+        <div class="work-title-text">Elektron Tijorat Platformasi</div>
+        <div class="work-tag-row">
+          <span class="work-tag">Dasturlash</span>
+          <span class="work-tag">2024</span>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <div class="work-img" style="min-height:278px">
+        <span class="work-placeholder">N</span>
+      </div>
+      <div class="work-info">
+        <div class="work-client">Noir Atelier</div>
+        <div class="work-title-text">Hashamatli Brend Tizimi</div>
+        <div class="work-tag-row">
+          <span class="work-tag">Strategiya</span>
+          <span class="work-tag">Identifikatsiya</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <span class="section-label">Bog'laning</span>
+  <h2 class="section-title" style="font-size:clamp(48px,7vw,96px)">Biror <em>ajoyib narsani</em><br>boshlashga tayyormisiz?</h2>
+  <p class="contact-sub">Har chorakda cheklangan miqdordagi yangi loyihalarni qabul qilamiz. Vaqtingiz to'g'ri kelsa — gaplashaylik.</p>
+  <a class="contact-cta" href="tel:+998337881112">Suhbatni boshlash</a>
+  <a class="contact-email" href="mailto:hello@velour.agency">hello@velour.agency</a>
+</section>
+
+<footer>
+  <div class="footer-logo">velour</div>
+  <div class="footer-copy">© 2026 Velour Veb Agentlik</div>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const canvas = document.getElementById('three-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 6);
+
+  const ambientLight = new THREE.AmbientLight(0xF5F0EA, 0.3);
+  scene.add(ambientLight);
+
+  const goldLight = new THREE.DirectionalLight(0xC9A96E, 2.2);
+  goldLight.position.set(2, 3, 4);
+  scene.add(goldLight);
+
+  const rimLight = new THREE.DirectionalLight(0xF5F0EA, 0.6);
+  rimLight.position.set(-3, -1, 2);
+  scene.add(rimLight);
+
+  const fillLight = new THREE.PointLight(0xC9A96E, 0.8, 20);
+  fillLight.position.set(0, -2, 3);
+  scene.add(fillLight);
+
+  const group = new THREE.Group();
+
+  function makeVShapeLeft() {
+    const shape = new THREE.Shape();
+    const w = 0.22, h = 3.4;
+    shape.moveTo(-1.5, h/2);
+    shape.lineTo(-1.5 + w, h/2);
+    shape.lineTo(0, -h/2 + 0.3);
+    shape.lineTo(-w/2, -h/2);
+    shape.lineTo(-w/2 - 0.12, -h/2 + 0.1);
+    shape.closePath();
+    return shape;
+  }
+
+  function makeVShapeRight() {
+    const shape = new THREE.Shape();
+    const w = 0.22, h = 3.4;
+    shape.moveTo(1.5, h/2);
+    shape.lineTo(1.5 - w, h/2);
+    shape.lineTo(0, -h/2 + 0.3);
+    shape.lineTo(w/2 + 0.12, -h/2 + 0.1);
+    shape.lineTo(w/2, -h/2);
+    shape.closePath();
+    return shape;
+  }
+
+  const extrudeSettings = {
+    depth: 0.3,
+    bevelEnabled: true,
+    bevelThickness: 0.04,
+    bevelSize: 0.03,
+    bevelSegments: 4
+  };
+
+  const goldMat = new THREE.MeshStandardMaterial({
+    color: 0xC9A96E,
+    metalness: 0.85,
+    roughness: 0.15,
+  });
+
+  const geo1 = new THREE.ExtrudeGeometry(makeVShapeLeft(), extrudeSettings);
+  const geo2 = new THREE.ExtrudeGeometry(makeVShapeRight(), extrudeSettings);
+
+  const mesh1 = new THREE.Mesh(geo1, goldMat);
+  const mesh2 = new THREE.Mesh(geo2, goldMat);
+  mesh1.position.z = -0.15;
+  mesh2.position.z = -0.15;
+
+  group.add(mesh1, mesh2);
+  scene.add(group);
+
+  // Particles
+  const pGeo = new THREE.BufferGeometry();
+  const pCount = 120;
+  const pPos = new Float32Array(pCount * 3);
+  for(let i = 0; i < pCount; i++){
+    pPos[i*3]   = (Math.random()-0.5)*14;
+    pPos[i*3+1] = (Math.random()-0.5)*12;
+    pPos[i*3+2] = (Math.random()-0.5)*6 - 2;
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  const pMat = new THREE.PointsMaterial({color:0xC9A96E, size:0.025, transparent:true, opacity:0.35});
+  scene.add(new THREE.Points(pGeo, pMat));
+
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  let time = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.008;
+
+    targetX += (mouseX * 0.35 - targetX) * 0.06;
+    targetY += (mouseY * 0.25 - targetY) * 0.06;
+
+    group.rotation.y = targetX * 0.6;
+    group.rotation.x = targetY * 0.3;
+    group.position.y = Math.sin(time) * 0.08;
+
+    goldLight.position.x = Math.sin(time * 0.7) * 2 + 2;
+    goldLight.position.y = Math.cos(time * 0.5) * 1.5 + 2;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>
